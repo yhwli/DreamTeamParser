@@ -1,0 +1,14 @@
+digraph G {
+	rankdir = LR
+	node0[label = "Abstraction", shape = ellipse, style = filled, fillcolor = "#5efaf7"];
+	node1[label = "Testing and HW3", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
+	node2[label = "Computing and the Environment", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
+	node3[label = "Privacy", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
+	node4[label = "AI", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
+	node5[label = "Alumni Panel", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
+	node0 -> node2;
+	node0 -> node3;
+	node1 -> node3;
+	node3 -> node4;
+	node4 -> node5;
+}

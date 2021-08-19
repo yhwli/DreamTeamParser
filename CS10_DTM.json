@@ -1,0 +1,88 @@
+{
+    "name": "CS10",
+    "term": "Fall 2021",
+    "rankdir": "LR",
+    "styles": {
+        "default": {
+            "shape": "ellipse",
+            "style": "filled",
+            "fillcolor": "#e0e0e0"
+        },
+        "fancy": {
+            "shape": "ellipse",
+            "style": "filled",
+            "fillcolor": "#5efaf7"
+        }
+    },
+    "nodes": [
+        {
+            "name": 0,
+            "label": "Abstraction",
+            "week": 0,
+            "class": "fancy",
+            "priority": 5
+        },
+        {
+            "name": 1,
+            "label": "Testing and HW3",
+            "week": 0,
+            "class": "default",
+            "priority": 1
+        },
+        {
+            "name": 2,
+            "label": "Computing and the Environment",
+            "week": 0,
+            "class": "default",
+            "priority": 1
+        },
+        {
+            "name": 3,
+            "label": "Privacy",
+            "week": 0,
+            "class": "default",
+            "priority": 1
+        },
+        {
+            "name": 4,
+            "label": "AI",
+            "week": 0,
+            "class": "default",
+            "priority": 1
+        },
+        {
+            "name": 5,
+            "label": "Alumni Panel",
+            "week": 0,
+            "class": "default",
+            "priority": 1
+        }
+    ],
+    "edges": [
+        {
+            "from": 0,
+            "to": [
+                2,
+                3
+            ]
+        },
+        {
+            "from": 1,
+            "to": [
+                3
+            ]
+        },
+        {
+            "from": 3,
+            "to": [
+                4
+            ]
+        },
+        {
+            "from": 4,
+            "to": [
+                5
+            ]
+        }
+    ]
+}
