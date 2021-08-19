@@ -1,43 +1,61 @@
 {
-    "nodes": [
+    "id": "0",
+    "name": "CS10",
+    "children": [
         {
-            "name": "1",
-            "label": "Testing and HW3",
-            "week": 0
+            "id": "2",
+            "name": "Testing and HW3",
+            "children": [
+                {
+                    "id": "6",
+                    "name": "Alumni Panel",
+                    "children": [],
+                    "data": {
+                        "week": 0
+                    }
+                }
+            ],
+            "data": {
+                "week": 0
+            }
         },
         {
-            "name": "2",
-            "label": "Computing and the Environment",
-            "week": 0
-        },
-        {
-            "name": "3",
-            "label": "Privacy",
-            "week": 0
-        },
-        {
-            "name": "4",
-            "label": "AI",
-            "week": 0
-        },
-        {
-            "name": "5",
-            "label": "Alumni Panel",
-            "week": 0
+            "id": "3",
+            "name": "Computing and the Environment",
+            "children": [
+                {
+                    "id": "4",
+                    "name": "Privacy",
+                    "children": [
+                        {
+                            "id": "5",
+                            "name": "AI",
+                            "children": [
+                                {
+                                    "id": "6",
+                                    "name": "Alumni Panel",
+                                    "children": [],
+                                    "data": {
+                                        "week": 0
+                                    }
+                                }
+                            ],
+                            "data": {
+                                "week": 0
+                            }
+                        }
+                    ],
+                    "data": {
+                        "week": 0
+                    }
+                }
+            ],
+            "data": {
+                "week": 0
+            }
         }
     ],
-    "paths": [
-        {
-            "start": "1",
-            "end": "3"
-        },
-        {
-            "start": "3",
-            "end": "4"
-        },
-        {
-            "start": "4",
-            "end": "5"
-        }
-    ]
+    "data": {
+        "week": 0
+    }
 }

@@ -31,6 +31,7 @@ class DreamTeamParser:
         self.filtered_paths = []
         self.classes = {}
         self.rankdir = ""
+        self.root = None
         self.log = ""
         self.log += "{}: DreamTeamParser initialized with dot file target {}.dot and " \
                     "priority level {}\n".format(datetime.now(), self.file_name, self.priority_cutoff)
@@ -46,6 +47,7 @@ class DreamTeamParser:
             for end in path["to"]:
                 self.paths.append((start, end))
         self.post_filter_all_paths()
+        self.find_root()
         return
 
     def read_dot(self):
@@ -92,13 +94,12 @@ class DreamTeamParser:
 
     def add_node(self, name, text, priority, week, style_class):
         self.expand_node(name)
-        new_node = Node(name, text, priority, week, style_class)
+        self.nodes[name] = Node(name, text, priority, week, style_class)
         if priority <= self.priority_cutoff:
-            self.filtered_nodes[name] = new_node
+            self.filtered_nodes[name] = Node(name, text, priority, week, style_class)
         else:
             self.log += "{}: Node{} with priority level {} ignored under cutoff {}\n".format(
                 datetime.now(), name, priority, self.priority_cutoff)
-        self.nodes[name] = new_node
         return
 
     def read_path(self, dot_line):
@@ -118,14 +119,40 @@ class DreamTeamParser:
                 self.log += "{}: Path {} to {} refers to undefined node(s) \n".format(
                     datetime.now(), start, end)
             else:
+                self.nodes[start].add_child(self.nodes[end])
+                self.nodes[end].add_parent(self.nodes[start])
                 if self.filtered_nodes[start] is not None and self.filtered_nodes[end] is not None:
                     filtered_paths.append((self.nodes[start], self.nodes[end]))
-                    self.nodes[start].add_child(self.nodes[end])
-                    self.nodes[end].add_parent(self.nodes[start])
+                    self.filtered_nodes[start].add_child(self.filtered_nodes[end])
+                    self.filtered_nodes[end].add_parent(self.filtered_nodes[start])
                 else:
                     self.log += "{}: Path {} to {} refers to undefined node(s) \n".format(
                         datetime.now(), start, end)
         self.filtered_paths = filtered_paths
+
+    def find_root(self):
+        roots = []
+        for node in self.filtered_nodes:
+            if node is not None:
+                if node.get_parent_count() == 0:
+                    roots.append(node)
+        self.filtered_root = Node(name=0, text=self.file_name, priority=0, week=0, style_class="default")
+        self.filtered_nodes[0] = self.filtered_root
+        for child in roots:
+            self.filtered_root.add_child(child)
+            self.filtered_paths.append((self.filtered_root, child))
+
+        roots = []
+        for node in self.nodes:
+            if node is not None:
+                if node.get_parent_count() == 0:
+                    roots.append(node)
+        self.root = Node(name=0, text=self.file_name, priority=0, week=0, style_class="default")
+        self.nodes[0] = self.root
+        self.filtered_nodes[0] = self.root
+        for child in roots:
+            self.root.add_child(child)
+            self.paths.append((0, child.get_name()))
 
     def to_json(self):
         nodes_json = []
@@ -145,6 +172,26 @@ class DreamTeamParser:
             json.dump(all_data_json, json_file, indent=4)
         self.log += "{}: Wrote to JSON; File titled {}.json\n".format(
             datetime.now(), self.file_name)
+
+    def to_json_tree(self):
+        nodes_json_tree = self.json_tree_generator(self.filtered_root)
+        with open('{}.json'.format(self.file_name), 'w', encoding='utf-8') as json_file:
+            json.dump(nodes_json_tree, json_file, indent=4)
+        self.log += "{}: Wrote to JSON; File titled {}.json\n".format(
+            datetime.now(), self.file_name)
+
+    def json_tree_generator(self, node):
+        node_json = {
+            "id": str(node.get_name()),
+            "name": node.get_text(),
+            "children": [],
+            "data": {
+                "week": node.get_week()
+            }
+        }
+        for child in node.get_children():
+            node_json["children"].append(self.json_tree_generator(child))
+        return node_json
 
     def write_dot(self):
         dot = "digraph G {\n"
@@ -176,7 +223,7 @@ class DreamTeamParser:
 
     def parse(self):
         self.read_json()
-        self.to_json()
+        self.to_json_tree()
         self.write_dot()
         self.write_log()
         self.close_files()
