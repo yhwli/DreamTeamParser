@@ -1,5 +1,2 @@
-2021-08-19 13:34:04.524011: DreamTeamParser initialized with dot file target CS10.dot and priority level 2
-2021-08-19 13:34:04.524077: Node1 with priority level 5 ignored under cutoff 2
-2021-08-19 13:34:04.524171: Path 1 to 2 refers to undefined node(s) 
-2021-08-19 13:34:04.524177: Path 1 to 3 refers to undefined node(s) 
-2021-08-19 13:34:04.524560: Wrote to JSON; File titled CS10.json
+2022-02-23 02:04:45.657045: DreamTeamParser initialized with dot file target CS10.dot and priority level 6
+2022-02-23 02:04:45.657512: Wrote to JSON; File titled CS10.json

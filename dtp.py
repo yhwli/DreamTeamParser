@@ -7,7 +7,61 @@ from Node import Node
 """
 Dream Team Parser
 @Version: DEV
-@Copy Right: University of California, Berkeley - ACE Lab
+@Copy Right:
+
+    - Parser:
+        (C) 2022 University of California, Berkeley - ACE Lab
+
+    - Web GUI - Modifications:
+        Copyright 2022 University of California, Berkeley - ACE Lab
+
+        Permission to use, copy, modify, and/or distribute this software for any purpose
+        with or without fee is hereby granted, provided that the above copyright notice
+        and this permission notice appear in all copies.
+
+        THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+        FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+        OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+        TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+        THIS SOFTWARE.
+
+    - Web GUI - Interactive d3.js tree diagram
+        Copyright 2022 github.com/d3noob
+
+        Permission is hereby granted, free of charge, to any person obtaining a copy of
+        this software and associated documentation files (the "Software"), to deal in the
+        Software without restriction, including without limitation the rights to use, copy,
+        modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+        and to permit persons to whom the Software is furnished to do so, subject to the
+        following conditions:
+
+        The above copyright notice and this permission notice shall be included in all copies
+        or substantial portions of the Software.
+
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+        PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+        FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+        OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.
+
+    - Web GUI - D3.js Framework
+        Copyright 2010-2021 Mike Bostock
+
+        Permission to use, copy, modify, and/or distribute this software for any purpose
+        with or without fee is hereby granted, provided that the above copyright notice
+        and this permission notice appear in all copies.
+
+        THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+        FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+        OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+        TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+        THIS SOFTWARE.
+
 
 Parser for Dream Team GUI - a Concept Map
 """
@@ -18,13 +72,14 @@ class DreamTeamParser:
     PATH_PATTERN = r'[\s]*node([\d]+)[\s]*->[\s]*node([\d]+);[\s]*\n'
     MULTI_PATH_MATCH_PATTERN = re.compile(r'[\s]*\{(node(\d)+,\s)+node(\d)+\}[\s]*->[\s]*node([\d]+);[\s]*\n')
     MULTI_PATH_EXTRACT_PATTERN = re.compile(r'node(\d+)')
+    WEEK_CEILING = 99
 
     def __init__(self, file_name, priority_cutoff):
         self.file_name = file_name
-        self.dot = open("{}.dot".format(file_name), "r")
+        # self.dot = open("{}.dot".format(file_name), "r")
         self.dtm = open("{}_DTM.json".format(file_name), "r")
         self.priority_cutoff = priority_cutoff
-        self.dot_lines = self.dot.readlines()
+        # self.dot_lines = self.dot.readlines()
         self.nodes = []
         self.filtered_nodes = []
         self.paths = []
@@ -136,7 +191,7 @@ class DreamTeamParser:
             if node is not None:
                 if node.get_parent_count() == 0:
                     roots.append(node)
-        self.filtered_root = Node(name=0, text=self.file_name, priority=0, week=0, style_class="default")
+        self.filtered_root = Node(name=0, text=self.file_name, priority=0, week=DreamTeamParser.WEEK_CEILING, style_class="default")
         self.filtered_nodes[0] = self.filtered_root
         for child in roots:
             self.filtered_root.add_child(child)
@@ -147,7 +202,7 @@ class DreamTeamParser:
             if node is not None:
                 if node.get_parent_count() == 0:
                     roots.append(node)
-        self.root = Node(name=0, text=self.file_name, priority=0, week=0, style_class="default")
+        self.root = Node(name=0, text=self.file_name, priority=0, week=DreamTeamParser.WEEK_CEILING, style_class="default")
         self.nodes[0] = self.root
         self.filtered_nodes[0] = self.root
         for child in roots:
@@ -184,13 +239,16 @@ class DreamTeamParser:
         node_json = {
             "id": str(node.get_name()),
             "name": node.get_text(),
+            "parent": "null",
             "children": [],
             "data": {
                 "week": node.get_week()
             }
         }
         for child in node.get_children():
-            node_json["children"].append(self.json_tree_generator(child))
+            child_json = self.json_tree_generator(child)
+            child_json["parent"] = node_json["name"]
+            node_json["children"].append(child_json)
         return node_json
 
     def write_dot(self):

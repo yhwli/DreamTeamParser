@@ -8,10 +8,9 @@ digraph G {
 	node5[label = "AI", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
 	node6[label = "Alumni Panel", shape = ellipse, style = filled, fillcolor = "#e0e0e0"];
 	node1 -> node2;
-	node1 -> node3;
 	node3 -> node4;
-	node4 -> node5;
-	node2 -> node6;
-	node5 -> node6;
+	node3 -> node6;
 	node0 -> node1;
+	node0 -> node3;
+	node0 -> node5;
 }

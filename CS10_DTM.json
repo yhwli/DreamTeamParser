@@ -18,42 +18,42 @@
         {
             "name": 1,
             "label": "Abstraction",
-            "week": 0,
+            "week": 1,
             "class": "fancy",
             "priority": 5
         },
         {
             "name": 2,
             "label": "Testing and HW3",
-            "week": 0,
+            "week": 1,
             "class": "default",
             "priority": 1
         },
         {
             "name": 3,
             "label": "Computing and the Environment",
-            "week": 0,
+            "week": 5,
             "class": "default",
             "priority": 1
         },
         {
             "name": 4,
             "label": "Privacy",
-            "week": 0,
+            "week": 2,
             "class": "default",
             "priority": 1
         },
         {
             "name": 5,
             "label": "AI",
-            "week": 0,
+            "week": 5,
             "class": "default",
             "priority": 1
         },
         {
             "name": 6,
             "label": "Alumni Panel",
-            "week": 0,
+            "week": 3,
             "class": "default",
             "priority": 1
         }
@@ -62,29 +62,15 @@
         {
             "from": 1,
             "to": [
-                2,
-                3
+                2
             ]
         },
         {
             "from": 3,
             "to": [
-                4
+                4,
+                6
             ]
-        },
-        {
-            "from": 4,
-            "to": [
-                5
-            ]
-        },
-        {
-            "from": 2,
-            "to": [6]
-        },
-        {
-            "from": 5,
-            "to": [6]
         }
     ]
 }

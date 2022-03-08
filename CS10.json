@@ -1,61 +1,66 @@
 {
     "id": "0",
     "name": "CS10",
+    "parent": "null",
     "children": [
         {
-            "id": "2",
-            "name": "Testing and HW3",
+            "id": "1",
+            "name": "Abstraction",
+            "parent": "CS10",
             "children": [
                 {
-                    "id": "6",
-                    "name": "Alumni Panel",
+                    "id": "2",
+                    "name": "Testing and HW3",
+                    "parent": "Abstraction",
                     "children": [],
                     "data": {
-                        "week": 0
+                        "week": 1
                     }
                 }
             ],
             "data": {
-                "week": 0
+                "week": 1
             }
         },
         {
             "id": "3",
             "name": "Computing and the Environment",
+            "parent": "CS10",
             "children": [
                 {
                     "id": "4",
                     "name": "Privacy",
-                    "children": [
-                        {
-                            "id": "5",
-                            "name": "AI",
-                            "children": [
-                                {
-                                    "id": "6",
-                                    "name": "Alumni Panel",
-                                    "children": [],
-                                    "data": {
-                                        "week": 0
-                                    }
-                                }
-                            ],
-                            "data": {
-                                "week": 0
-                            }
-                        }
-                    ],
+                    "parent": "Computing and the Environment",
+                    "children": [],
                     "data": {
-                        "week": 0
+                        "week": 2
+                    }
+                },
+                {
+                    "id": "6",
+                    "name": "Alumni Panel",
+                    "parent": "Computing and the Environment",
+                    "children": [],
+                    "data": {
+                        "week": 3
                     }
                 }
             ],
             "data": {
-                "week": 0
+                "week": 5
+            }
+        },
+        {
+            "id": "5",
+            "name": "AI",
+            "parent": "CS10",
+            "children": [],
+            "data": {
+                "week": 5
             }
         }
     ],
     "data": {
-        "week": 0
+        "week": 6
     }
 }
